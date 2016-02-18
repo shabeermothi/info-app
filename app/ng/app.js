@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 angular
-  .module('managecrisisApp', [
+  .module('SampleInfoApp', [
     'ngAnimate'
     ,'ngCookies'
     ,'ngMessages'
@@ -18,10 +18,8 @@ angular
     ,'ngTouch'
     ,'ui.bootstrap'
     ,'ui.router'
-    ,'uiGmapgoogle-maps'
-    ,'mc.geo'
   ])
-  .config(function ($urlRouterProvider, $stateProvider, uiGmapGoogleMapApiProvider) {
+  .config(function ($urlRouterProvider, $stateProvider) {
     $urlRouterProvider.otherwise('/home');
 
     $stateProvider
@@ -29,14 +27,18 @@ angular
         url: '/home',
         templateUrl: 'views/home.html'
       })
-      .state('stories', {
-        url: '/stories',
-        templateUrl: 'views/stories.html'
+      .state('contacts', {
+        url: '/contacts',
+        templateUrl: 'views/contacts.html',
+        controller: ['$scope', 'app.contact.service', function ($scope, ContactService) {
+          $scope.contacts = ContactService.getAllContacts();
+        }]
+      })
+      .state('details', {
+        url: '/contacts/:contactId',
+        templateUrl: 'views/contact-details.html',
+        controller: ['$scope', '$stateParams', 'app.contact.service', function ($scope, $stateParams, ContactService) {
+          $scope.contactDetails = ContactService.getContactDetails($stateParams.contactId);
+        }]
       });
-
-    // Angular Google Maps provider
-    uiGmapGoogleMapApiProvider.configure({
-      v: '3.20',
-      libraries: 'weather,geometry,visualization'
-    });
   });
