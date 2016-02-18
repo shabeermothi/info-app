@@ -1,4 +1,4 @@
 # Sample Info App
 =================
 
-Build Status : ![alt tag](https://travis-ci.org/shabeermothi/manage-crisis.svg?branch=master)
+Build Status : ![alt tag](https://travis-ci.org/shabeermothi/info-app.svg?branch=master)
