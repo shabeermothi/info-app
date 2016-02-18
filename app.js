@@ -1,5 +1,6 @@
 var express = require('express');
 var path = require('path');
+var mongodbClient = require('mongodb').MongoClient;
 var app = express();
 
 var router = require('./routes/index');
@@ -17,6 +18,15 @@ app.set('views', './app');
 // Set html engine using ejs
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
+
+var dbUri = 'mongodb://localhost:27017/test';
+
+mongodbClient.connect(dbUri, function (err, db) {
+  if (err) throw 'Error Occured while connecting to MongoDb!';
+  console.log('Successfully connected to MongoDb :) ');
+  db.close();
+});
+
 
 // Use router for request rewrite
 app.use('/', router);
